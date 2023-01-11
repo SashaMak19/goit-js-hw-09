@@ -4,24 +4,26 @@ const body = document.querySelector('body');
 
 let timerId = null;
 
-startBtn.addEventListener('click', () => {
-  timerId = setInterval(onStartView, 1000);
-});
+stopBtn.setAttribute('disabled', true);
 
+startBtn.addEventListener('click', onStartView);
 stopBtn.addEventListener('click', onStopView);
 
 function onStartView(e) {
   startBtn.setAttribute('disabled', true);
   stopBtn.removeAttribute('disabled');
-  body.style.backgroundColor = `${getRandomHexColor()}`;
+  timerId = setInterval(() => {
+    body.style.backgroundColor = `${getRandomHexColor()}`;
+  }, 1000);
+
   console.log('hello from onStart');
 }
 
-function onStopView() {
+function onStopView(e) {
   startBtn.removeAttribute('disabled');
   stopBtn.setAttribute('disabled', true);
-  startBtn.removeEventListener('click', onStartView);
   clearInterval(timerId);
+
   console.log('hello from onStop');
 }
 
